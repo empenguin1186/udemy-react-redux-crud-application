@@ -14,4 +14,8 @@
   - https://webpack.js.org/
 
 ## Component
-- 
+- Component を定義することで、HTML要素の部品を使用することが可能。
+
+## Props
+- Component に渡すことができる引数みたいなもの。`<Component>.defaultProps`でデフォルトの値を設定することが可能。
+- map などのイテレーションを回す処理を実装する場合は、react Component に key を付与して一意性を担保することが必要。

@@ -19,3 +19,20 @@
 ## Props
 - Component に渡すことができる引数みたいなもの。`<Component>.defaultProps`でデフォルトの値を設定することが可能。
 - map などのイテレーションを回す処理を実装する場合は、react Component に key を付与して一意性を担保することが必要。
+
+## PropTypes
+- Propsには型を指定することが可能。以下のように記述する。
+
+```js
+import PropTypes from 'prop-types';
+
+const User = ...
+
+User.propTypes = {
+  name: PropTypes.string,
+  age: PropTypes.number.isRequired
+}
+```
+
+## State
+- `setState()` が呼ばれると、ReactComponent　の render メソッドが呼ばれる。Stateを変更したい場合は必ず `setState()` を使用する。

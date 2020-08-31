@@ -36,3 +36,88 @@ User.propTypes = {
 
 ## State
 - `setState()` が呼ばれると、ReactComponent　の render メソッドが呼ばれる。Stateを変更したい場合は必ず `setState()` を使用する。
+
+# redux に関して
+
+## Action, Reducer, State, Component, Store について
+
+### Action
+- Action は文字通りユーザが何かしらのアクションを行なった時に返すデータを定義する。この Action をトリガーとして Reducer の処理を実装する。
+```js
+export const decrement = () => ({
+    type: DECREMENT
+});
+```
+
+### Reducer
+- 受け取った Action に応じて State を変更する役割を担う。実装は以下のようなイメージ。
+
+```js
+import { INCREMENT, DECREMENT } from '../actions'
+
+const initialState = { value: 0 }
+
+export default (state = initialState, action) => {
+    switch (action.type) {
+        case INCREMENT:
+            return { value: state.value + 1 };
+        case DECREMENT:
+            return { value: state.value - 1 };
+        default:
+            return state;
+    }
+}
+```
+
+- またアプリケーションで使用する Reducer を宣言する必要があり、以下のように `combineReducers` 関数を使用する。Reducer の名前はファイル名と同じになる。
+```js
+import { combineReducers } from 'redux'
+import count from './count'
+import dummy from './dummy'
+
+export default combineReducers({ count, dummy })
+```
+
+### Store
+- Reducer を Store に登録することでアプリケーションでいつでも Reducer を使用することが可能となる。Provider に Store を登録することでアプリケーションで扱えるようになる。
+
+```js
+...
+import { createStore } from 'redux';
+import { Provider } from 'react-redux';
+...
+
+const store = createStore(reducer)
+
+ReactDOM.render(
+  <Provider store={store}>
+    <App />
+  </Provider>,
+  document.getElementById('root')
+);
+```
+
+- 使用する側は以下のように実装することとなる。
+```js
+import { increment, decrement } from '../actions';
+
+class App extends Component {
+
+  render() {
+    const props = this.props
+
+    return (
+      <React.Fragment>
+        <div>value: {props.value}</div>
+        <button onClick={props.increment}>+</button>
+        <button onClick={props.decrement}>-</button>
+      </React.Fragment>
+    )
+  }
+}
+
+const mapStateToProps = state => ({ value: state.count.value });
+const mapDispatchToProps = ({ increment, decrement })
+export default connect(mapStateToProps, mapDispatchToProps)(App)
+```
+- `increment` が呼ばれると、`{type: 'INCREMENT'}` という Action が発生し、それに応じて count reducer が state を変更する。この場合 `value` の値が1増えるように実装されているので、画面では `value` の項目に 1 が表示されることとなる。

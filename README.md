@@ -69,7 +69,7 @@ export default (state = initialState, action) => {
 }
 ```
 
-- またアプリケーションで使用する Reducer を宣言する必要があり、以下のように `combineReducers` 関数を使用する。Reducer の名前はファイル名と同じになる。
+- またアプリケーションで使用する Reducer を宣言する必要があり、以下のように `combineReducers` 関数を使用する。
 ```js
 import { combineReducers } from 'redux'
 import count from './count'

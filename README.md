@@ -121,3 +121,23 @@ const mapDispatchToProps = ({ increment, decrement })
 export default connect(mapStateToProps, mapDispatchToProps)(App)
 ```
 - `increment` が呼ばれると、`{type: 'INCREMENT'}` という Action が発生し、それに応じて count reducer が state を変更する。この場合 `value` の値が1増えるように実装されているので、画面では `value` の項目に 1 が表示されることとなる。
+
+### action で関数を返すようにするには？
+- src/index.js で thunk をミドルウェアとして apply することにより、action発火時に関数を返すようにできる
+
+```js
+import { createStore, applyMiddleware } from 'redux';
+
+import reducer from './reducers';
+import thunk from 'redux-thunk';
+
+const store = createStore(reducer, applyMiddleware(thunk));
+```
+
+```js
+export const readEvents = () => async dispatch => {
+    const response = await axios.get(`${ROOT_URL}/events${QUERY_STRING}`);
+    console.log(response)
+    dispatch({ type: READ_EVENTS, response })
+}
+```

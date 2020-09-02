@@ -141,3 +141,27 @@ export const readEvents = () => async dispatch => {
     dispatch({ type: READ_EVENTS, response })
 }
 ```
+
+# react-router-dom について
+
+## 資料
+- https://reactrouter.com/web/api
+
+## Route
+- パスとマッチしたComponentをrenderする。
+```js
+<Route exact path="/" component={EventsIndex}></Route>
+```
+- `exact`はパスが完全一致した場合に Component を render するという設定。
+
+## Switch
+- パスと最初にマッチしたRouteを返す
+```js
+<Switch>
+  <Route exact path="/events/new" component={EventsNew}></Route>
+  <Route exact path="/" component={EventsIndex}></Route>
+</Switch>
+```
+
+## BrowserRouter
+- サイト全体を定義するComponentのようだが、詳細は不明。

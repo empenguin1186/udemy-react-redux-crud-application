@@ -165,3 +165,18 @@ export const readEvents = () => async dispatch => {
 
 ## BrowserRouter
 - サイト全体を定義するComponentのようだが、詳細は不明。
+
+# その他 Tips
+
+## javascript の オブジェクトから特定のフィールドの値を抜き出したい
+```js
+const object = {path: "/events/:id", url: "/events/10", isExact: true, params: {id: "10"}}
+
+// object の id フィールドの値を変数 id に代入する
+const { id } = object.params
+```
+
+## this.props.history.push
+- 画面遷移を行う。前にいた画面を履歴に追加してブラウザの戻るボタンで戻れるようにする。
+
+## 

@@ -179,4 +179,36 @@ const { id } = object.params
 ## this.props.history.push
 - 画面遷移を行う。前にいた画面を履歴に追加してブラウザの戻るボタンで戻れるようにする。
 
-## 
+## redux-form による Form の初期値の設定
+- redux-from を使用すると、Formの初期値を設定できる。mapStateProps の戻り値の initialValues フィールドに設定したい初期値の値を設定する。この場合、Component の nameと一致するフィールド名の値が初期値としてレンダリングされる。
+```js
+class  EventsShow extends Component {
+  render() {
+      const { handleSubmit, pristine, submitting } = this.props;
+
+      return (
+          <form onSubmit={handleSubmit(this.onSubmit)}>
+              // titleには Let's have an event 4! が表示
+              <div><Field label="Title" name="title" type="text" component={this.renderField} /></div>
+
+              // bodyには This is the body for event 4. が表示
+              <div><Field label="Body" name="body" type="text" component={this.renderField} /></div>
+
+              <div>
+                  <input type="submit" value="Submit" disabled={pristine || submitting} />
+                  <Link to="/">Cansel</Link>
+                  <Link to="/" onClick={this.onDeleteClick}>Delete</Link>
+              </div>
+          </form>
+      )
+  }
+}
+...
+
+const mapStateToProps = (state, ownProps) => {
+    const event = {id: 4, title: "Let's have an event 4!", body: "This is the body for event 4."}
+    console.log(event);
+    return { initialValues: event, event }
+}
+```
+- https://redux-form.com/8.3.0/examples/initializefromstate/

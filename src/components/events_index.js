@@ -3,6 +3,16 @@ import { connect } from 'react-redux';
 import { readEvents } from '../actions';
 import _ from 'lodash';
 import { Link } from 'react-router-dom';
+import {
+	Table,
+	TableBody,
+	TableHeader,
+	TableHeaderColumn,
+	TableRow,
+	TableRowColumn
+} from 'material-ui/Table';
+import FloatingActionButton from 'material-ui/FloatingActionButton';
+import ContentAdd from 'material-ui/svg-icons/content/add';
 
 class EventsIndex extends Component {
 
@@ -12,31 +22,39 @@ class EventsIndex extends Component {
 
 	renderEvents() {
 		return _.map(this.props.events, event => (
-			<tr key={event.id}>
-				<td>{event.id}</td>
-				<td><Link to={`/events/${event.id}`}>{event.title}</Link></td>
-				<td>{event.body}</td>
-			</tr>
+			<TableRow key={event.id}>
+				<TableRowColumn>{event.id}</TableRowColumn>
+				<TableRowColumn><Link to={`/events/${event.id}`}>{event.title}</Link></TableRowColumn>
+				<TableRowColumn>{event.body}</TableRowColumn>
+			</TableRow>
 		));
 	}
 
 	render() {
+		const style = {
+			position: "fixed",
+			right: 12,
+			bottom: 12
+		}
+
 		return (
 			<React.Fragment>
-				<table>
-					<thead>
-						<tr>
-							<th>ID</th>
-							<th>Title</th>
-							<th>Body</th>
-						</tr>
-					</thead>
-					<tbody>
-						{this.renderEvents()}
-					</tbody>
-				</table>
+				<FloatingActionButton style={style} containerElement={<Link to="/events/new" />}>
+					<ContentAdd />
+				</FloatingActionButton>
 
-				<Link to="/events/new">New Event</Link>
+				<Table>
+					<TableHeader displaySelectAll={false} adjustForCheckbox={false}>
+						<TableRow>
+							<TableHeaderColumn>ID</TableHeaderColumn>
+							<TableHeaderColumn>Title</TableHeaderColumn>
+							<TableHeaderColumn>Body</TableHeaderColumn>
+						</TableRow>
+					</TableHeader>
+					<TableBody displayRowCheckbox={false}>
+						{this.renderEvents()}
+					</TableBody>
+				</Table>
 			</React.Fragment>
 		)
 	}

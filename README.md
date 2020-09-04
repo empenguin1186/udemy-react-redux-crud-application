@@ -212,3 +212,11 @@ const mapStateToProps = (state, ownProps) => {
 }
 ```
 - https://redux-form.com/8.3.0/examples/initializefromstate/
+
+
+## default export と 名前付き export の違い
+
+- 名前付きは同じファイルで複数の値を export することができるが、import する場合は同じ名前を使用する必要がある。一方 default export は同じファイルで export することができるオブジェクトは一つだけだが、import する場合は任意の名前を使用することが可能。
+
+### 資料
+- https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Statements/export
